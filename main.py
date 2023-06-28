@@ -20,39 +20,11 @@ conn = psycopg2.connect(host=host, database=database,
 #RETURN "INDEX"
 @app.route('/')
 def index():
-    return render_template('login.html')
-#RETURN "ENTREGA"
-@app.route('/entrega')
-def entrega():
-    return render_template('entrega.html')
-#RETURN "NOSOTROS"
-@app.route('/nosotros')
-def nosotros():
-    return render_template('nosotros.html')
-#RETURN "PARA REGALAR"
-@app.route('/pararegalar')
-def pararegalar():
-    return render_template('pararegalar.html')
-#RETURN "TRATAMIENTO"
-@app.route('/tratamiento')
-def tratamiento():
-    return render_template('tratamiento.html')
-#RETURN "DECORATIVAS"
-@app.route('/decorativas')
-def decorativas():
-    return render_template('decorativas.html')
-#RETURN "AROMATICAS"
-@app.route('/aromaticas')
-def aromaticas():
-    return render_template('aromaticas.html')
-#RETURN "SERVICIOS"
-@app.route('/servicios')
-def servicios():
-    return render_template('servicios.html')
-#RETURN "CONTACTANOS"
-@app.route('/contactanos')
-def contactanos():
-    return render_template('contactanos.html')
+    return render_template('index.html')
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 #login
 @app.route('/login/', methods=['GET', 'POST'])
@@ -74,7 +46,7 @@ def login():
                 session['loggedin'] = True
                 session['id'] = account['id']
                 session['username'] = account['username']               
-                return redirect(url_for('products'))
+                return redirect(url_for('admin'))
             else:
                 
                 flash('Usuario no Existe')
@@ -85,6 +57,26 @@ def login():
     return render_template('login.html')
 
 #register
+def validar_nombre(fullname):
+    if fullname[0].isupper() and fullname.isalpha():
+        return True
+    return False
+
+def validar_correo(email):
+    if "@" in email:
+        return True
+    return False
+
+def validar_usuario(username):
+    if len(username) >= 4 and any(char.isdigit() for char in username):
+        return True
+    return False
+
+def validar_contrasena(password):
+    if 8 <= len(password) <= 16 and any(char.isalpha() for char in password) and any(char.isdigit() for char in password):
+        return True
+    return False
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -114,7 +106,13 @@ def register():
             conn.commit()
             return render_template('login.html')
     elif request.method == 'POST':       
-        flash('Por favor llena los campos del registro!')   
+        flash('Por favor llena los campos del registro!')  
+        
+        if validar_nombre(fullname) and validar_correo(email) and validar_usuario(username) and validar_contrasena(password):
+            
+            return "Registro exitoso"
+        else:
+            return "Error en el registro. Verifica los campos e inténtalo nuevamente." 
     return render_template('register.html')
  
 @app.route('/add', methods=['POST'])

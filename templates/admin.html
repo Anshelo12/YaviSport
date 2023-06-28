@@ -1,0 +1,40 @@
+{% extends './base.html' %}
+{% block titulo %}
+<title>YaviSport</title>
+{% endblock %}
+{% block contenido %}
+<link rel="stylesheet" href="/static/css/stile.css">  
+
+<header>
+    <div class="col">
+        <center>
+            <img src="{{url_for('static',filename='img/logo-yavi.jpeg')}}" class="logo">
+        </center>
+    </div>
+</header>
+ 
+  <h2>Formulario de Equipo</h2>
+  <form>
+    <label for="numero">Número de equipo:</label>
+    <input type="number" id="numero" name="numero" required>
+
+    <label for="nombre">Nombre del equipo:</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="dirigente">Nombre del dirigente:</label>
+    <input type="text" id="dirigente" name="dirigente" required>
+
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" required>
+
+    <label for="categoria">Categoría:</label>
+    <select id="categoria" name="categoria" required>
+      <option value="juvenil">Juvenil</option>
+      <option value="adulto">Adulto</option>
+      <option value="mayores">Mayores</option>
+    </select>
+
+    <input type="submit" value="Enviar">
+  </form>
+
+{% endblock %}
