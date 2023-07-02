@@ -8,7 +8,7 @@
       <div class="row">
         <center>
           <div>  
-            <img src="{{url_for('static',filename='img/logo-yavi.jpeg')}}" class="logo-y">
+            <img src="{{url_for('static',filename='img/logo-yavi.png')}}" class="logo-y">
           </div>   
         <div class="col col-md-5 ">
                 <div class="row">
@@ -47,8 +47,7 @@
               {% endfor %}
               {% endif %}
               {% endwith %}   
-              <p>No tienes una cuenta <a href="{{ url_for('register') }}">Registrate Aqui</a></p>
-              <a class="btn btn-primary" href="{{ url_for('index') }}">Cancelar</a> 
+              <a class="btn btn-primary" href="{{ url_for('inicio') }}">Cancelar</a> 
         </center>      
       </div>
       </div>

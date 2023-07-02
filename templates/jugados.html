@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/stile.css">
+    <title>Programacion</title>
+</head>
+<body>    
+    <header>
+        <nav class="navbar navbar-expand">
+            <div class="container">
+              <a class="navbar-brand" href="login"><img src="/static/img/logo-yavi.png" alt="Logo del torneo"></a>
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="{{ url_for('inicio') }}">
+                    ATRAS
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </header>
+    <main>
+        <div class="container">
+            <center><h1>Partidos Jugados</h1></center>
+           
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Equipo local</th>
+          <th>Equipo visitante</th>
+          <th>Ganador</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí irían las filas de la tabla de partidos jugados -->
+        <tr>
+            <td>Equipo A</td>
+            <td>Equipo B</td>
+            <td>Equipo A</td>
+          </tr>
+          <tr>
+            <td>Equipo C</td>
+            <td>Equipo D</td>
+            <td>Equipo D</td>
+          </tr>
+          <tr>
+            <td>Equipo E</td>
+            <td>Equipo F</td>
+            <td>Equipo F</td>
+          </tr>
+        <!-- ... -->
+      </tbody>
+    </table>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+</html>

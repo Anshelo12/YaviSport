@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request, flash, session, jsonify
-import psycopg2 
+import psycopg2
 import psycopg2.extras
 import re 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,14 +17,27 @@ conn = psycopg2.connect(host=host, database=database,
                    user=username, password=password, port=port)
 
 
-#RETURN "INDEX"
+#RETURN "INICIO"
 @app.route('/')
-def index():
-    return render_template('index.html')
-
+def inicio():
+    return render_template('inicio.html')
+#RETURN "ADMIN"
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
+#RETURN "PROGRAMACION"
+@app.route('/programacion')
+def programacion():
+    return render_template('programacion.html')
+#RETURN "POSICION"
+@app.route('/posiciones')
+def posiciones():
+    return render_template('posiciones.html')
+#RETURN "PARTIDOS JUGADOSS"
+@app.route('/jugados')
+def jugados():
+    return render_template('jugados.html')
+
 
 #login
 @app.route('/login/', methods=['GET', 'POST'])
@@ -114,6 +127,81 @@ def register():
         else:
             return "Error en el registro. Verifica los campos e inténtalo nuevamente." 
     return render_template('register.html')
+
+#registro inscripcion
+@app.route('/inscripcion',  methods=['GET', 'POST'])
+def inscripcion():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+        numeroe = request.form['numeroe']
+        nombree = request.form['nombree']
+        nombred = request.form['nombred']
+        telefono = request.form['telefono']
+        Categoriae = request.form['Categoriae']
+
+        # Realizar la inserción en la base de datos
+        cursor.execute("INSERT INTO inscripcione (numeroe, nombree, nombred, telefono, Categoriae) VALUES (%s, %s, %s, %s, %s)", (numeroe, nombree, nombred, telefono, Categoriae))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+        return 'Datos guardados exitosamente'
+    return render_template('inscripcion.html')
+#registro programacion partidos
+@app.route('/partidospro',  methods=['GET', 'POST'])
+def partidospro():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+        equipo1pro = request.form['equipo1pro']
+        equipo2pro = request.form['equipo2pro']
+        fechapro = request.form['fechapro']
+        estadiopro = request.form['estadiopro']
+
+        # Realizar la inserción en la base de datos
+        cursor.execute("INSERT INTO programacionp (equipo1pro, equipo2pro, fechapro, estadiopro) VALUES (%s, %s, %s, %s)", (equipo1pro, equipo2pro, fechapro, estadiopro))
+        conn.commit()
+
+        cursor.close()
+
+        return 'Datos guardados exitosamente'
+    return render_template('partidospro.html')
+#registro partidos jugados
+@app.route('/partidosju',  methods=['GET', 'POST'])
+def partidosju():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+        equipo1jug = request.form['equipo1jug']
+        equipo2jug = request.form['equipo2jug']
+        equipogana = request.form['equipogana']
+
+        # Realizar la inserción en la base de datos
+        cursor.execute("INSERT INTO partidosju (equipo1jug, equipo2jug, equipogana) VALUES (%s, %s, %s)", (equipo1jug, equipo2jug, equipogana))
+        conn.commit()
+
+        cursor.close()
+
+        return 'Datos guardados exitosamente'
+    return render_template('partidosju.html')
+#registro tabla de posiciones
+@app.route('/tablap',  methods=['GET', 'POST'])
+def tablap():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+        equipo1pro = request.form['equipo1pro']
+        equipo2pro = request.form['equipo2pro']
+        fechapro = request.form['fechapro']
+        estadiopro = request.form['estadiopro']
+
+        # Realizar la inserción en la base de datos
+        cursor.execute("INSERT INTO programacionp (equipo1pro, equipo2pro, fechapro, estadiopro) VALUES (%s, %s, %s, %s)", (equipo1pro, equipo2pro, fechapro, estadiopro))
+        conn.commit()
+
+        cursor.close()
+
+        return 'Datos guardados exitosamente'
+    return render_template('tablap.html')
+
+        
  
 @app.route('/add', methods=['POST'])
 def add_product_to_cart():

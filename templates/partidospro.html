@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inscripcion Equipos</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/stile.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+            <div class="form-container2" id="form-container2">
+                <center>Programacion de los partidos</center>
+                <form id="userForm" action="/partidospro" method="post">
+                      <label for="equipo1pro">Equipo 1</label>
+                      <input
+                        id="equipo1pro"
+                        name="equipo1pro"
+                        type="text"
+                        placeholder=""
+                        class="form-control mb-2"
+                        required
+                      />
+            
+                      <label for="equipo2pro">Equipo 2</label>
+                      <input
+                        id="equipo2pro"
+                        name="equipo2pro"
+                        type="text"
+                        placeholder=""
+                        class="form-control mb-2"
+                        required
+                      />
+            
+                      <label for="fechapro">Fecha</label>
+                      <input
+                        id="fechapro"
+                        name="fechapro"
+                        type="date"
+                        placeholder=""
+                        class="form-control mb-2"
+                        required
+                      />
+            
+                      <label for="estadiopro">Estadio</label>
+                      <input
+                        id="estadiopro"
+                        name="estadiopro"
+                        type="text"
+                        placeholder=""
+                        class="form-control mb-2"
+                        required
+                      />
+                      
+                      <input type="submit" value="Guardar">
+                    </form>
+            
+                    <!-- User's List -->
+                    <ul id="userList" class="list-group"></ul>
+              </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inscripcion Equipos</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/stile.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="form-container4" id="form-container4">
+        <center>Partidos jugados</center>
+            <form id="userForm" action="/partidosju" method="post">
+              <label for="equipo1jug">Equipo 1</label>
+              <input
+                id="equipo1jug"
+                name="equipo1jug"
+                type="text"
+                placeholder=""
+                class="form-control mb-2"
+                required
+              />
+    
+              <label for="equipo2jug">Equipo 2</label>
+              <input
+                id="equipo2jug"
+                name="equipo2jug"
+                type="text"
+                placeholder=""
+                class="form-control mb-2"
+                required
+              />
+
+              <label for="equipogana">Equipo Ganador</label>
+              <input
+                id="equipogana"
+                name="equipogana"
+                type="text"
+                placeholder=""
+                class="form-control mb-2"
+                required
+              />
+              <br>
+              <input type="submit" value="Guardar">
+            </form>
+    
+            <!-- User's List -->
+            <ul id="userList" class="list-group"></ul>
+      </div>
+</body>
+</html>

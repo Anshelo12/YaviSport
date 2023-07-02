@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario enviado</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Formulario enviado exitosamente</h1>
+    <p>Nombre: {{ nombre }}</p>
+    <p>Correo electrónico: {{ correo }}</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inscripcion Equipos</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/stile.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="form-container1" id="form-container1">
+        <center>Inscripcion equipos </center>
+        <form id="userForm" action="/inscripcion" method="post">
+          <label for="numeroe">Numero de equipo</label>
+          <input
+            id="numeroe"
+            name="numeroe"
+            type="number"
+            placeholder=""
+            class="form-control mb-2"
+            required
+          />
+
+          <label for="nombree">Nombre del Equipo</label>
+          <input
+            id="nombree"
+            name="nombree"
+            type="text"
+            placeholder=""
+            class="form-control mb-2"
+            required
+          />
+
+          <label for="nombred">Nombre del Dirigente</label>
+          <input
+            id="nombred"
+            name="nombred"
+            type="text"
+            placeholder=""
+            class="form-control mb-2"
+            required
+          />
+
+          <label for="telefono">Telefono</label>
+          <input
+            id="telefono"
+            name="telefono"
+            type="tel"
+            placeholder=""
+            class="form-control mb-2"
+            required
+          />
+          
+          <label for="Categoriae">Categoria</label>
+          <select name="Categoriae" id="Categoriae">
+            <option value="opcion1">Niños</option>
+            <option value="opcion2">Señor</option>
+            <option value="opcion3">Sub 45</option>
+          </select>
+          <br><br>
+          <input type="submit" value="Guardar">
+        </form>
+
+        <!-- User's List -->
+        <ul id="userList" class="list-group"></ul>
+  </div>
+</body>
+</html>

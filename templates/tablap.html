@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inscripcion Equipos</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/stile.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="form-container3" id="form-container3">
+        <center>Tabla de posiciones</center>
+            <form id="userForm" action="/tablap" method="post">
+              <label for="equipoLT">Equipo Local</label>
+              <input
+                name="equipoLT"
+                type="number"
+                placeholder=""
+                class="form-control mb-2"
+                required
+              />
+    
+              <label for="equipoVT">Equipo visitante</label>
+              <input
+                name="equipoVT"
+                type="number"
+                placeholder=""
+                class="form-control mb-2"
+                required
+              />
+              <br>
+              <button class="btn btn-success">GUARDAR</button>
+            </form>
+    
+            <!-- User's List -->
+            <ul id="userList" class="list-group"></ul>
+      </div>
+</body>
+</html>

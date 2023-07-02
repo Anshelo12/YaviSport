@@ -1,40 +1,103 @@
-{% extends './base.html' %}
-{% block titulo %}
-<title>YaviSport</title>
-{% endblock %}
-{% block contenido %}
-<link rel="stylesheet" href="/static/css/stile.css">  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/stile.css">
+    <title>Administrador</title>
+</head>
+<body>    
+    <header>
+        <nav class="navbar navbar-expand">
+            <div class="container">
+              <a class="navbar-brand" href="login"><img src="{{url_for('static',filename='img/logo-yavi.png')}}" alt="Logo del torneo"></a>
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item1 dropdown">
+                  <a href="{{ url_for('register') }}" class="reg">Registrar administrador</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="{{ url_for('inicio') }}">
+                    <img src="{{url_for('static',filename='img/usuario.png')}}" class="usuario">
+                  </a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+      <div class="navbar1">
+        <a href="/inscripcion">Inscripcion de equipos</a>
+        <a href="/partidospro">Programacion de los partidos</a>
+        <a href="/partidosju">Partidos jugados</a>
+        <a href="/tablap">Tabla de posiciones</a>
+      </div>
+    
+      <div class="tabla">
+        <table>
+          <tr>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+          </tr>
+          <tr>
+           
+          </tr>
+        </table>
+      </div>
+      
+      <div class="tabla">
+        <table>
+          <tr>
+            <th>Tabla 2</th>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+          </tr>
+          <tr>
+            
+          </tr>
+          <tr>
+           
+          </tr>
+        </table>
+      </div>
+      
+      <div class="tabla">
+        <table>
+          <tr>
+            <th>Tabla 3</th>
+            <th>Tabla 1</th>
+            <th>Tabla 1</th>
+          </tr>
+          <tr>
+            
+          </tr>
+          <tr>
 
-<header>
-    <div class="col">
-        <center>
-            <img src="{{url_for('static',filename='img/logo-yavi.jpeg')}}" class="logo">
-        </center>
-    </div>
-</header>
- 
-  <h2>Formulario de Equipo</h2>
-  <form>
-    <label for="numero">Número de equipo:</label>
-    <input type="number" id="numero" name="numero" required>
-
-    <label for="nombre">Nombre del equipo:</label>
-    <input type="text" id="nombre" name="nombre" required>
-
-    <label for="dirigente">Nombre del dirigente:</label>
-    <input type="text" id="dirigente" name="dirigente" required>
-
-    <label for="telefono">Teléfono:</label>
-    <input type="tel" id="telefono" name="telefono" required>
-
-    <label for="categoria">Categoría:</label>
-    <select id="categoria" name="categoria" required>
-      <option value="juvenil">Juvenil</option>
-      <option value="adulto">Adulto</option>
-      <option value="mayores">Mayores</option>
-    </select>
-
-    <input type="submit" value="Enviar">
-  </form>
-
-{% endblock %}
+          </tr>
+        </table>
+      </div>
+      
+      <div class="tabla">
+        <table>
+          <tr>
+            <th>Tabla 4</th>
+            <th>Tabla 1</th>
+          </tr>
+          <tr>
+            
+          </tr>
+          <tr>
+            
+          </tr>
+        </table>
+      </div>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+</html>
