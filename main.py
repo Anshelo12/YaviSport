@@ -10,7 +10,7 @@ app.secret_key='yavisport'
 host =     'localhost'
 database = 'YaviSport'
 username = 'postgres'
-password = 'anshe12'
+password = '0983239989'
 port =      5432
  
 conn = psycopg2.connect(host=host, database=database,
@@ -37,7 +37,6 @@ def posiciones():
 @app.route('/jugados')
 def jugados():
     return render_template('jugados.html')
-
 
 #login
 @app.route('/login/', methods=['GET', 'POST'])
@@ -128,6 +127,19 @@ def register():
             return "Error en el registro. Verifica los campos e inténtalo nuevamente." 
     return render_template('register.html')
 
+#tabla de inscripcion
+@app.route('/tablains')
+def mostrar_tabla():
+    # Establecer la conexión a la base de datos
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    # Realizar una consulta a la base de datos para obtener los datos
+    query = "SELECT * FROM inscripcione"
+    cursor.execute(query)
+    datos = cursor.fetchall()
+    
+    # Renderizar el template de la tabla HTML y pasar los datos como argumento
+    return render_template('tablains.html', datos=datos)
 #registro inscripcion
 @app.route('/inscripcion',  methods=['GET', 'POST'])
 def inscripcion():
@@ -145,8 +157,9 @@ def inscripcion():
 
         cursor.close()
         conn.close()
-        return 'Datos guardados exitosamente'
+        return redirect(url_for('.tablains'))
     return render_template('inscripcion.html')
+
 #registro programacion partidos
 @app.route('/partidospro',  methods=['GET', 'POST'])
 def partidospro():
@@ -200,54 +213,6 @@ def tablap():
 
         return 'Datos guardados exitosamente'
     return render_template('tablap.html')
-
-        
- 
-@app.route('/add', methods=['POST'])
-def add_product_to_cart():
-    _quantity = int(request.form['quantity'])
-    _code = request.form['code']
-    # validate the received values
-    if _quantity and _code and request.method == 'POST':
- 
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
- 
-        cursor.execute('SELECT * FROM product WHERE code = %s', (_code,))
-        row = cursor.fetchone()
-                 
-        itemArray = { row['code'] : {'name' : row['name'], 'code' : row['code'], 'quantity' : _quantity, 'price' : row['price'], 'image' : row['image'], 'total_price': _quantity * row['price']}}
-                 
-        all_total_price = 0
-        all_total_quantity = 0
-                 
-        session.modified = True
-        if 'cart_item' in session:
-            if row['code'] in session['cart_item']:
-                for key, value in session['cart_item'].items():
-                    if row['code'] == key:
-                        old_quantity = session['cart_item'][key]['quantity']
-                        total_quantity = old_quantity + _quantity
-                        session['cart_item'][key]['quantity'] = total_quantity
-                        session['cart_item'][key]['total_price'] = total_quantity * row['price']
-            else:
-                session['cart_item'] = array_merge(session['cart_item'], itemArray)
-         
-            for key, value in session['cart_item'].items():
-                individual_quantity = int(session['cart_item'][key]['quantity'])
-                individual_price = float(session['cart_item'][key]['total_price'])
-                all_total_quantity = all_total_quantity + individual_quantity
-                all_total_price = all_total_price + individual_price
-        else:
-            session['cart_item'] = itemArray
-            all_total_quantity = all_total_quantity + _quantity
-            all_total_price = all_total_price + _quantity * row['price']
-             
-        session['all_total_quantity'] = all_total_quantity
-        session['all_total_price'] = all_total_price
-                 
-        return redirect(url_for('products'))
-    else:
-        return 'Error while adding item to cart'
  
 @app.route('/empty')
 def empty_cart():
