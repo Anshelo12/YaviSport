@@ -1,5 +1,8 @@
 body {
   background-color: #FBFBFB;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -214,7 +217,7 @@ input[type="submit"] {
   }
   
   .tabla {
-    padding: 15px;
+    padding: 50px;
     float: left;
     margin-right: 10px;
   }
@@ -230,3 +233,85 @@ input[type="submit"] {
     padding-right: 18.4px;
     text-align: center;
   } 
+
+.form-container1,
+.form-container2,
+.form-container4{
+  float: left;
+  padding: 50px;
+}
+
+form.eliminar {
+  display: inline;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contenedor-tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.tarjeta {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tarjeta:hover {
+  background-color: lightgray;
+}
+
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.descripcion {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.bienvenido {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+.mensaje {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  transition: transform 0.3s ease;
+  font-family: "Helvetica", sans-serif;
+}
+
+.mensaje:hover {
+  transform: scale(1.1);
+  color: #00ff00;
+}

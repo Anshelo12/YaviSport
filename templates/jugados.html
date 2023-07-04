@@ -25,35 +25,22 @@
     <main>
         <div class="container">
             <center><h1>Partidos Jugados</h1></center>
-           
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Equipo local</th>
-          <th>Equipo visitante</th>
-          <th>Ganador</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Aquí irían las filas de la tabla de partidos jugados -->
-        <tr>
-            <td>Equipo A</td>
-            <td>Equipo B</td>
-            <td>Equipo A</td>
-          </tr>
-          <tr>
-            <td>Equipo C</td>
-            <td>Equipo D</td>
-            <td>Equipo D</td>
-          </tr>
-          <tr>
-            <td>Equipo E</td>
-            <td>Equipo F</td>
-            <td>Equipo F</td>
-          </tr>
-        <!-- ... -->
-      </tbody>
-    </table>
+              <table>
+                <tr>
+                  <th>Equipo 1</th>
+                  <th>Equipo 2</th>
+                  <th>Equipo Ganador</th>
+                </tr>
+                {% for fila in datos %}
+                <tr>
+                  <td>{{ fila[1] }}</td>
+                  <td>{{ fila[2] }}</td>
+                  <td>{{ fila[3] }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>    
+    
     </main>
     <footer>
         

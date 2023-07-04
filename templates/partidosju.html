@@ -1,49 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Inscripcion Equipos</title>
+  <title>Partidos jugados</title>
   <link rel="stylesheet" type="text/css" href="/static/css/stile.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="form-container4" id="form-container4">
-        <center>Partidos jugados</center>
-            <form id="userForm" action="/partidosju" method="post">
-              <label for="equipo1jug">Equipo 1</label>
-              <input
-                id="equipo1jug"
-                name="equipo1jug"
-                type="text"
-                placeholder=""
-                class="form-control mb-2"
-                required
-              />
-    
-              <label for="equipo2jug">Equipo 2</label>
-              <input
-                id="equipo2jug"
-                name="equipo2jug"
-                type="text"
-                placeholder=""
-                class="form-control mb-2"
-                required
-              />
+  <header>
+  <nav class="navbar navbar-expand">
+    <div class="container">
+      <a class="navbar-brand" href="login"><img src="{{url_for('static',filename='img/logo-yavi.png')}}" alt="Logo del torneo"></a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="{{ url_for('admin') }}">
+            ATRAS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<center><h3>Partidos Jugados</h3></center>
+<div class="form-container4" id="form-container4">
+  <form id="userForm" action="{{ url_for('partidosju') }}" method="post">
+    {% if dato %}
+    <input type="hidden" name="idj" value="{{ dato['idj'] }}">
+    {% endif %}
+    <label for="equipo1jug">Equipo 1</label>
+    <input
+      id="equipo1jug"
+      name="equipo1jug"
+      type="text"
+      placeholder=""
+      class="form-control mb-2"
+      value="{{ dato['equipo1jug'] if dato else '' }}"
+      required
+    />
 
-              <label for="equipogana">Equipo Ganador</label>
-              <input
-                id="equipogana"
-                name="equipogana"
-                type="text"
-                placeholder=""
-                class="form-control mb-2"
-                required
-              />
-              <br>
-              <input type="submit" value="Guardar">
-            </form>
-    
-            <!-- User's List -->
-            <ul id="userList" class="list-group"></ul>
-      </div>
+    <label for="equipo2jug">Equipo 2</label>
+    <input
+      id="equipo2jug"
+      name="equipo2jug"
+      type="text"
+      placeholder=""
+      class="form-control mb-2"
+      value="{{ dato['equipo2jug'] if dato else '' }}"
+      required
+    />
+
+    <label for="equipogana">Equipo Ganador</label>
+    <input
+      id="equipogana"
+      name="equipogana"
+      type="text"
+      placeholder=""
+      class="form-control mb-2"
+      value="{{ dato['equipogana'] if dato else '' }}"
+      required
+    />
+    <br>
+    <input type="submit" value="Guardar">
+  </form>
+</div>
+
+<!-- Tabla de partidos jugados -->
+<div class="tabla">
+  <table>
+    <tr>
+      <th>Equipo 1</th>
+      <th>Equipo 2</th>
+      <th>Equipo ganador</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
+    </tr>
+    {% for fila in datos %}
+    <tr>
+      <td>{{ fila[1] }}</td>
+      <td>{{ fila[2] }}</td>
+      <td>{{ fila[3] }}</td>
+      <td><a href="{{ url_for('editarju', idj=fila['idj']) }}"><img src="/static/img/editar.png" alt="Logo Basurero" width="25" height="25"></a></td>
+      <td>
+        <form class="eliminar" action="{{ url_for('borrarju', idj=fila['idj']) }}" method="post" onsubmit="return confirm('¿Estás seguro de eliminar este registro?')">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="image" src="/static/img/eliminar.png" alt="Eliminar" width="25" height="25">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 </body>
 </html>

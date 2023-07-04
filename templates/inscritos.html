@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/stile.css">
-    <title>Programacion de partidos</title>
+    <title>Programacion</title>
 </head>
 <body>    
     <header>
         <nav class="navbar navbar-expand">
             <div class="container">
-              <a class="navbar-brand" href="login"><img src="{{url_for('static',filename='img/logo-yavi.png')}}" alt="Logo del torneo"></a>
+              <a class="navbar-brand" href="login"><img src="/static/img/logo-yavi.png" alt="Logo del torneo"></a>
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                   <a class="nav-link" href="{{ url_for('inicio') }}">
@@ -24,24 +24,27 @@
     </header>
     <main>
         <div class="container">
-            <center><h1>Programación de Partidos</h1></center>
-            <table>
-              <tr>
-                <th>Equipo 1</th>
-                <th>Equipo 2</th>
-                <th>Fecha</th>
-                <th>Estadio</th>
-              </tr>
-              {% for fila in datos %}
-              <tr>
-                <td>{{ fila[1] }}</td>
-                <td>{{ fila[2] }}</td>
-                <td>{{ fila[3] }}</td>
-                <td>{{ fila[4] }}</td>
-              </tr>
-              {% endfor %}
-            </table>
-          </div>   
+            <center><h1>Equipos Inscritos</h1></center>
+              <table>
+                <tr>
+                  <th># Equipo</th>
+                  <th>Nombre</th>
+                  <th>Dirigente</th>
+                  <th>Telefono</th>
+                  <th>Categoria</th>
+                </tr>
+                {% for fila in datos %}
+                <tr>
+                  <td>{{ fila[1] }}</td>
+                  <td>{{ fila[2] }}</td>
+                  <td>{{ fila[3] }}</td>
+                  <td>{{ fila[4] }}</td>
+                  <td>{{ fila[5] }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>    
+    
     </main>
     <footer>
         

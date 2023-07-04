@@ -10,7 +10,7 @@ app.secret_key='yavisport'
 host =     'localhost'
 database = 'YaviSport'
 username = 'postgres'
-password = '0983239989'
+password = 'anshe12'
 port =      5432
  
 conn = psycopg2.connect(host=host, database=database,
@@ -25,18 +25,34 @@ def inicio():
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
+#RETURN "INSCRITOS"
+@app.route('/inscritos')
+def inscritos():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT * FROM inscripcione")
+    datos = cursor.fetchall()
+    cursor.close()
+    return render_template('inscritos.html', datos=datos)
 #RETURN "PROGRAMACION"
 @app.route('/programacion')
 def programacion():
-    return render_template('programacion.html')
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT * FROM programacionp")
+    datos = cursor.fetchall()
+    cursor.close()
+    return render_template('programacion.html', datos=datos)
+#RETURN "PARTIDOS JUGADOSS"
+@app.route('/jugados')
+def jugados():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT * FROM partidosju")
+    datos = cursor.fetchall()
+    cursor.close()
+    return render_template('jugados.html', datos=datos)
 #RETURN "POSICION"
 @app.route('/posiciones')
 def posiciones():
     return render_template('posiciones.html')
-#RETURN "PARTIDOS JUGADOSS"
-@app.route('/jugados')
-def jugados():
-    return render_template('jugados.html')
 
 #login
 @app.route('/login/', methods=['GET', 'POST'])
@@ -127,23 +143,33 @@ def register():
             return "Error en el registro. Verifica los campos e inténtalo nuevamente." 
     return render_template('register.html')
 
-#tabla de inscripcion
-@app.route('/tablains')
-def mostrar_tabla():
-    # Establecer la conexión a la base de datos
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-    # Realizar una consulta a la base de datos para obtener los datos
-    query = "SELECT * FROM inscripcione"
-    cursor.execute(query)
-    datos = cursor.fetchall()
-    
-    # Renderizar el template de la tabla HTML y pasar los datos como argumento
-    return render_template('tablains.html', datos=datos)
 #registro inscripcion
 @app.route('/inscripcion',  methods=['GET', 'POST'])
 def inscripcion():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+        idins = request.form.get('idins')  # Obtener el ID del formulario de edición si existe
+        numeroe = request.form['numeroe']
+        nombree = request.form['nombree']
+        nombred = request.form['nombred']
+        telefono = request.form['telefono']
+        Categoriae = request.form['Categoriae']
+
+        if idins:  # Si hay un ID, es una solicitud de edición
+            cursor.execute("UPDATE inscripcione SET numeroe = %s, nombree = %s, nombred = %s, telefono = %s, Categoriae = %s WHERE idins = %s", (numeroe, nombree, nombred, telefono, Categoriae, idins))
+        else:  # Si no hay un ID, es una solicitud de creación
+            cursor.execute("INSERT INTO inscripcione (numeroe, nombree, nombred, telefono, Categoriae) VALUES (%s, %s, %s, %s, %s)", (numeroe, nombree, nombred, telefono, Categoriae))
+        conn.commit()
+
+    cursor.execute("SELECT * FROM inscripcione")
+    datos = cursor.fetchall()
+    cursor.close()
+
+    return render_template('inscripcion.html', datos=datos)
+@app.route('/editarins/<int:idins>', methods=['GET', 'POST'])
+def editarins(idins):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
     if request.method == 'POST':
         numeroe = request.form['numeroe']
         nombree = request.form['nombree']
@@ -151,50 +177,147 @@ def inscripcion():
         telefono = request.form['telefono']
         Categoriae = request.form['Categoriae']
 
-        # Realizar la inserción en la base de datos
-        cursor.execute("INSERT INTO inscripcione (numeroe, nombree, nombred, telefono, Categoriae) VALUES (%s, %s, %s, %s, %s)", (numeroe, nombree, nombred, telefono, Categoriae))
+        cursor.execute("UPDATE inscripcione SET numeroe = %s, nombree = %s, nombred = %s, telefono = %s, Categoriae = %s WHERE idins = %s", (numeroe, nombree, nombred, telefono, Categoriae, idins))
         conn.commit()
 
-        cursor.close()
-        conn.close()
-        return redirect(url_for('.tablains'))
-    return render_template('inscripcion.html')
+        return redirect(url_for('inscripcion'))
+
+    cursor.execute("SELECT * FROM inscripcione WHERE idins = %s", (idins,))
+    dato = cursor.fetchone()
+    cursor.close()
+
+    return render_template('inscripcion.html', dato=dato)
+@app.route('/borrarins/<int:idins>', methods=['GET', 'POST'])
+def borrarins(idins):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if request.method == 'POST':
+        # Eliminar el registro de la base de datos
+        cursor.execute("DELETE FROM inscripcione WHERE idins = %s", (idins,))
+        conn.commit()
+
+    # Obtener los datos actualizados de la tabla
+    cursor.execute("SELECT * FROM inscripcione")
+    datos = cursor.fetchall()
+    cursor.close()
+
+    return render_template('inscripcion.html', datos=datos)
 
 #registro programacion partidos
 @app.route('/partidospro',  methods=['GET', 'POST'])
 def partidospro():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
+        idp = request.form.get('idp')  # Obtener el ID del formulario de edición si existe
         equipo1pro = request.form['equipo1pro']
         equipo2pro = request.form['equipo2pro']
         fechapro = request.form['fechapro']
         estadiopro = request.form['estadiopro']
 
-        # Realizar la inserción en la base de datos
-        cursor.execute("INSERT INTO programacionp (equipo1pro, equipo2pro, fechapro, estadiopro) VALUES (%s, %s, %s, %s)", (equipo1pro, equipo2pro, fechapro, estadiopro))
+        if idp:  # Si hay un ID, es una solicitud de edición
+            cursor.execute("UPDATE programacionp SET equipo1pro = %s, equipo2pro = %s, fechapro = %s, estadiopro = %s WHERE idp = %s", (equipo1pro, equipo2pro, fechapro, estadiopro, idp))
+        else:  # Si no hay un ID, es una solicitud de creación
+            cursor.execute("INSERT INTO programacionp (equipo1pro, equipo2pro, fechapro, estadiopro) VALUES (%s, %s, %s, %s, %s)", (equipo1pro, equipo2pro, fechapro, estadiopro))
+        conn.commit()
+    cursor.execute("SELECT * FROM programacionp")
+    datos = cursor.fetchall()
+    cursor.close()
+
+    return render_template('partidospro.html', datos=datos)
+@app.route('/editarpar/<int:idp>', methods=['GET', 'POST'])
+def editarpar(idp):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if request.method == 'POST':
+        equipo1pro = request.form['equipo1pro']
+        equipo2pro = request.form['equipo2pro']
+        fechapro = request.form['fechapro']
+        estadiopro = request.form['estadiopro']
+
+        cursor.execute("UPDATE programacionp SET equipo1pro = %s, equipo2pro = %s, fechapro = %s, estadiopro = %s WHERE idp = %s", (equipo1pro, equipo2pro, fechapro, estadiopro, idp))
         conn.commit()
 
-        cursor.close()
+        return redirect(url_for('partidospro'))
+    cursor.execute("SELECT * FROM programacionp WHERE idp = %s", (idp,))
+    dato = cursor.fetchone()
+    cursor.close()
 
-        return 'Datos guardados exitosamente'
-    return render_template('partidospro.html')
+    return render_template('partidospro.html', dato=dato)
+@app.route('/borrarpar/<int:idp>', methods=['GET', 'POST'])
+def borrarpar(idp):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if request.method == 'POST':
+        # Eliminar el registro de la base de datos
+        cursor.execute("DELETE FROM programacionp WHERE idp = %s", (idp,))
+        conn.commit()
+
+    # Obtener los datos actualizados de la tabla
+    cursor.execute("SELECT * FROM programacionp")
+    datos = cursor.fetchall()
+    cursor.close()
+
+    return render_template('partidospro.html', datos=datos)
+
 #registro partidos jugados
 @app.route('/partidosju',  methods=['GET', 'POST'])
 def partidosju():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
+        idj = request.form.get('idj')  # Obtener el ID del formulario de edición si existe
         equipo1jug = request.form['equipo1jug']
         equipo2jug = request.form['equipo2jug']
         equipogana = request.form['equipogana']
 
-        # Realizar la inserción en la base de datos
-        cursor.execute("INSERT INTO partidosju (equipo1jug, equipo2jug, equipogana) VALUES (%s, %s, %s)", (equipo1jug, equipo2jug, equipogana))
+        if idj:  # Si hay un ID, es una solicitud de edición
+            cursor.execute("UPDATE partidosju SET equipo1jug = %s, equipo2jug = %s, equipogana = %s WHERE idj = %s", (equipo1jug, equipo2jug, equipogana, idj))
+        else:  # Si no hay un ID, es una solicitud de creación
+            cursor.execute("INSERT INTO partidosju (equipo1jug, equipo2jug, equipogana) VALUES (%s, %s, %s)", (equipo1jug, equipo2jug, equipogana))
         conn.commit()
 
-        cursor.close()
+    cursor.execute("SELECT * FROM partidosju")
+    datos = cursor.fetchall()
+    cursor.close()
 
-        return 'Datos guardados exitosamente'
-    return render_template('partidosju.html')
+    return render_template('partidosju.html', datos=datos)
+@app.route('/editarju/<int:idj>', methods=['GET', 'POST'])
+def editarju(idj):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if request.method == 'POST':
+        equipo1jug = request.form['equipo1jug']
+        equipo2jug = request.form['equipo2jug']
+        equipogana = request.form['equipogana']
+
+        cursor.execute("UPDATE partidosju SET equipo1jug = %s, equipo2jug = %s, equipogana = %s WHERE idj = %s", (equipo1jug, equipo2jug, equipogana, idj))
+        conn.commit()
+
+        return redirect(url_for('partidosju'))
+
+    cursor.execute("SELECT * FROM partidosju WHERE idj = %s", (idj,))
+    dato = cursor.fetchone()
+    cursor.close()
+
+    return render_template('partidosju.html', dato=dato)
+@app.route('/borrarju/<int:idj>', methods=['GET', 'POST'])
+def borrarju(idj):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if request.method == 'POST':
+        # Eliminar el registro de la base de datos
+        cursor.execute("DELETE FROM partidosju WHERE idj = %s", (idj,))
+        conn.commit()
+
+    # Obtener los datos actualizados de la tabla
+    cursor.execute("SELECT * FROM partidosju")
+    datos = cursor.fetchall()
+    cursor.close()
+
+    return render_template('partidosju.html', datos=datos)
+
+
+
+
 #registro tabla de posiciones
 @app.route('/tablap',  methods=['GET', 'POST'])
 def tablap():
@@ -221,57 +344,6 @@ def empty_cart():
         return redirect(url_for('.products'))
     except Exception as e:
         print(e)
- 
-@app.route('/delete/<string:code>')
-def delete_product(code):
-    try:
-        all_total_price = 0
-        all_total_quantity = 0
-        session.modified = True
-         
-        for item in session['cart_item'].items():
-            if item[0] == code:    
-                session['cart_item'].pop(item[0], None)
-                if 'cart_item' in session:
-                    for key, value in session['cart_item'].items():
-                        individual_quantity = int(session['cart_item'][key]['quantity'])
-                        individual_price = float(session['cart_item'][key]['total_price'])
-                        all_total_quantity = all_total_quantity + individual_quantity
-                        all_total_price = all_total_price + individual_price
-                break
-         
-        if all_total_quantity == 0:
-            session.clear()
-        else:
-            session['all_total_quantity'] = all_total_quantity
-            session['all_total_price'] = all_total_price
-             
-        return redirect(url_for('.carrito'))
-    except Exception as e:
-        print(e)
- 
-def array_merge( first_array , second_array ):
-    if isinstance( first_array , list ) and isinstance( second_array , list ):
-        return first_array + second_array
-    elif isinstance( first_array , dict ) and isinstance( second_array , dict ):
-        return dict( list( first_array.items() ) + list( second_array.items() ) )
-    elif isinstance( first_array , set ) and isinstance( second_array , set ):
-        return first_array.union( second_array )
-    return False
- 
-if __name__ == "__main__":
-    app.run(debug=True)
-#fin carrito
-
-
-
-
-@app.route('/redirecciona')
-def redirecciona(sitio=None):
-    if sitio is not None:
-        return redirect(url_for('index'))
-    else:
-        return redirect(url_for('acercade'))
 
 # Con parametros
 def pagina_no_encontrada(error):

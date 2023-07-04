@@ -6,61 +6,110 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="form-container1" id="form-container1">
-        <center>Inscripcion equipos </center>
-        <form id="userForm" action="/inscripcion" method="post">
-          <label for="numeroe">Numero de equipo</label>
-          <input
-            id="numeroe"
-            name="numeroe"
-            type="number"
-            placeholder=""
-            class="form-control mb-2"
-            required
-          />
+  <header>
+    <nav class="navbar navbar-expand">
+        <div class="container">
+          <a class="navbar-brand" href="login"><img src="{{url_for('static',filename='img/logo-yavi.png')}}" alt="Logo del torneo"></a>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="{{ url_for('admin') }}">
+                ATRAS
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+</header>
+  <center><h3>Inscripcion equipos</h3></center>
+  <div class="form-container4" id="form-container4">
+    <form id="userForm" action="{{ url_for('inscripcion') }}" method="post">
+      {% if dato %}
+      <input type="hidden" name="idins" value="{{ dato['idins'] }}">
+      {% endif %}
+      <label for="numeroe">Numero de Equipo</label>
+      <input
+        id="numeroe"
+        name="numeroe"
+        type="number"
+        placeholder=""
+        class="form-control mb-2"
+        value="{{ dato['numeroe'] if dato else '' }}"
+        required
+      />
+  
+      <label for="nombree">Nombre de Equipo</label>
+      <input
+        id="nombree"
+        name="nombree"
+        type="text"
+        placeholder=""
+        class="form-control mb-2"
+        value="{{ dato['nombree'] if dato else '' }}"
+        required
+      />
+  
+      <label for="nombred">Nombre del Dirigente</label>
+      <input
+        id="nombred"
+        name="nombred"
+        type="text"
+        placeholder=""
+        class="form-control mb-2"
+        value="{{ dato['nombred'] if dato else '' }}"
+        required
+      />
 
-          <label for="nombree">Nombre del Equipo</label>
-          <input
-            id="nombree"
-            name="nombree"
-            type="text"
-            placeholder=""
-            class="form-control mb-2"
-            required
-          />
+      <label for="telefono">Telefono</label>
+      <input
+        id="telefono"
+        name="telefono"
+        type="text"
+        placeholder=""
+        class="form-control mb-2"
+        value="{{ dato['telefono'] if dato else '' }}"
+        required
+      />
 
-          <label for="nombred">Nombre del Dirigente</label>
-          <input
-            id="nombred"
-            name="nombred"
-            type="text"
-            placeholder=""
-            class="form-control mb-2"
-            required
-          />
-
-          <label for="telefono">Telefono</label>
-          <input
-            id="telefono"
-            name="telefono"
-            type="tel"
-            placeholder=""
-            class="form-control mb-2"
-            required
-          />
-          
-          <label for="Categoriae">Categoria</label>
-          <select name="Categoriae" id="Categoriae">
-            <option value="Niños">Niños</option>
-            <option value="Señor">Señor</option>
-            <option value="Sub 45">Sub 45</option>
-          </select>
-          <br><br>
-          <input type="submit" value="Guardar">
-        </form>
-
-        <!-- User's List -->
-        <ul id="userList" class="list-group"></ul>
+      <label for="Categoriae">Categoria</label>
+      <select name="Categoriae" id="Categoriae" value="{{ dato['Categoriae'] if dato else '' }}" required>
+        <option value="Niños">Niños</option>
+        <option value="Señor">Señor</option>
+        <option value="Sub 45">Sub 45</option>
+      </select>
+      <br>
+      <input type="submit" value="Guardar">
+    </form>
+  </div>
+  
+  <!-- Tabla de partidos jugados -->
+  <div class="tabla">
+    <table>
+      <tr>
+        <th># Equipo</th>
+        <th>Nombre</th>
+        <th>Dirigente</th>
+        <th>Telefono</th>
+        <th>Categoria</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+      </tr>
+      {% for fila in datos %}
+      <tr>
+        <td>{{ fila[1] }}</td>
+        <td>{{ fila[2] }}</td>
+        <td>{{ fila[3] }}</td>
+        <td>{{ fila[4] }}</td>
+        <td>{{ fila[5] }}</td>
+        <td><a href="{{ url_for('editarins', idins=fila['idins']) }}"><img src="/static/img/editar.png" alt="Logo Basurero" width="25" height="25"></a></td>
+        <td>
+          <form class="eliminar" action="{{ url_for('borrarins', idins=fila['idins']) }}" method="post" onsubmit="return confirm('¿Estás seguro de eliminar este registro?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="image" src="/static/img/eliminar.png" alt="Eliminar" width="25" height="25">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
 </body>
 </html>

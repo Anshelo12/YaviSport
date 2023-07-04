@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="/static/css/stile.css">
     <title>Administrador</title>
 </head>
-<body>    
+<body class="admin">    
     <header>
         <nav class="navbar navbar-expand">
             <div class="container">
-              <a class="navbar-brand" href="login"><img src="{{url_for('static',filename='img/logo-yavi.png')}}" alt="Logo del torneo"></a>
+              <a class="navbar-brand" href=""><img src="{{url_for('static',filename='img/logo-yavi.png')}}" alt="Logo del torneo"></a>
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item1 dropdown">
                   <a href="{{ url_for('register') }}" class="reg">Registrar administrador</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link" href="{{ url_for('inicio') }}">
-                    <img src="{{url_for('static',filename='img/usuario.png')}}" class="usuario">
+                    <img src="{{url_for('static',filename='img/cerrar-sesion.png')}}" class="usuario">
                   </a>
                 </li>
               </ul>
@@ -26,81 +26,39 @@
         </nav>
     </header>
     <main>
-      <div class="navbar1">
-        <a href="/inscripcion">Inscripcion de equipos</a>
-        <a href="/partidospro">Programacion de los partidos</a>
-        <a href="/partidosju">Partidos jugados</a>
-        <a href="/tablap">Tabla de posiciones</a>
+      <div class="bienvenido">
+        <div class="mensaje">Bienvenido<br>Administrador</div>
       </div>
+      <div class="contenedor-tarjetas">
+        <a href="/inscripcion">
+          <div class="tarjeta">
+            <div class="titulo">Inscripción de equipos</div>
+            <div class="descripcion">Haz clic para inscribir equipos</div>
+          </div>
+        </a>
     
-      <div class="tabla">
-        <table>
-          <tr>
-            <th># Equipo</th>
-            <th>Nombre</th>
-            <th>Dirigente</th>
-            <th>Telefono</th>
-            <th>Categoria</th>
-          </tr>
-          {% for fila in datos %}
-          <tr>
-            <td>{{ fila[0] }}</td>
-            <td>{{ fila[1] }}</td>
-            <td>{{ fila[2] }}</td>
-            <td>{{ fila[3] }}</td>
-            <td>{{ fila[4] }}</td>
-          </tr>
-          {% endfor %}
-        </table>
+        <a href="/partidospro">
+          <div class="tarjeta">
+            <div class="titulo">Programación de partidos</div>
+            <div class="descripcion">Haz clic para programar partidos</div>
+          </div>
+        </a>
+        
+        <a href="/partidosju">
+          <div class="tarjeta">
+            <div class="titulo">Partidos jugados</div>
+            <div class="descripcion">Haz clic para ver los partidos jugados</div>
+          </div>
+        </a>
+    
+        <a href="/tablap">
+          <div class="tarjeta">
+            <div class="titulo">Tabla de posiciones</div>
+            <div class="descripcion">Haz clic para ver la tabla de posiciones</div>
+          </div>
+        </a>
       </div>
-      
-      <div class="tabla">
-        <table>
-          <tr>
-            <th>Tabla 2</th>
-            <th>Tabla 1</th>
-            <th>Tabla 1</th>
-            <th>Tabla 1</th>
-          </tr>
-          <tr>
-            
-          </tr>
-          <tr>
-           
-          </tr>
-        </table>
-      </div>
-      
-      <div class="tabla">
-        <table>
-          <tr>
-            <th>Tabla 3</th>
-            <th>Tabla 1</th>
-            <th>Tabla 1</th>
-          </tr>
-          <tr>
-            
-          </tr>
-          <tr>
-
-          </tr>
-        </table>
-      </div>
-      
-      <div class="tabla">
-        <table>
-          <tr>
-            <th>Tabla 4</th>
-            <th>Tabla 1</th>
-          </tr>
-          <tr>
-            
-          </tr>
-          <tr>
-            
-          </tr>
-        </table>
-      </div>
+     
     </main>
     <footer>
         

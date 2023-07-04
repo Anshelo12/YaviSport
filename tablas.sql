@@ -1,5 +1,6 @@
-create table inscripcionE(
-	numeroe float primary key not null,
+create table inscripcione(
+	idins serial primary key not null,
+	numeroe int not null,
 	nombree varchar(25) not null,
 	nombred varchar(25) not null,
 	telefono varchar(10) not null,
