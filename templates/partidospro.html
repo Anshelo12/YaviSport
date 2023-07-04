@@ -58,7 +58,18 @@
         value="{{ dato['fechapro'] if dato else '' }}"
         required
       />
-
+      
+      <label for="horapro">Hora</label>
+      <input
+        id="horapro"
+        name="horapro"
+        type="time"
+        placeholder=""
+        class="form-control mb-2"
+        value="{{ dato['horapro'] if dato else '' }}"
+        required
+      />
+      
       <label for="estadiopro">Estadio</label>
       <input
         id="estadiopro"
@@ -81,6 +92,7 @@
         <th>Equipo 1</th>
         <th>Equipo 2</th>
         <th>Fecha</th>
+        <th>Hora</th>
         <th>Estadio</th>
         <th>Editar</th>
         <th>Eliminar</th>
@@ -91,6 +103,7 @@
         <td>{{ fila[2] }}</td>
         <td>{{ fila[3] }}</td>
         <td>{{ fila[4] }}</td>
+        <td>{{ fila[5] }}</td>
         <td><a href="{{ url_for('editarpar', idp=fila['idp']) }}"><img src="/static/img/editar.png" alt="Logo Basurero" width="25" height="25"></a></td>
         <td>
           <form class="eliminar" action="{{ url_for('borrarpar', idp=fila['idp']) }}" method="post" onsubmit="return confirm('¿Estás seguro de eliminar este registro?')">

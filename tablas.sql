@@ -12,8 +12,9 @@ create table programacionp(
 	equipo1pro varchar(25) not null,
 	equipo2pro varchar(25) not null,
 	fechapro date not null,
+	horapro  time not null,
 	estadiopro varchar(25) not null
-)
+	)
 
 create table partidosju(
 	idj serial primary key not null,

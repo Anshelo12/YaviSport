@@ -10,7 +10,7 @@ app.secret_key='yavisport'
 host =     'localhost'
 database = 'YaviSport'
 username = 'postgres'
-password = 'anshe12'
+password = '0983239989'
 port =      5432
  
 conn = psycopg2.connect(host=host, database=database,
@@ -211,13 +211,14 @@ def partidospro():
         idp = request.form.get('idp')  # Obtener el ID del formulario de edición si existe
         equipo1pro = request.form['equipo1pro']
         equipo2pro = request.form['equipo2pro']
-        fechapro = request.form['fechapro']
+        fechapro   = request.form['fechapro']
+        horapro    = request.form['horapro']
         estadiopro = request.form['estadiopro']
 
         if idp:  # Si hay un ID, es una solicitud de edición
-            cursor.execute("UPDATE programacionp SET equipo1pro = %s, equipo2pro = %s, fechapro = %s, estadiopro = %s WHERE idp = %s", (equipo1pro, equipo2pro, fechapro, estadiopro, idp))
+            cursor.execute("UPDATE programacionp SET equipo1pro = %s, equipo2pro = %s, fechapro = %s, horapro = %s, estadiopro = %s WHERE idp = %s", (equipo1pro, equipo2pro, fechapro,horapro, estadiopro, idp))
         else:  # Si no hay un ID, es una solicitud de creación
-            cursor.execute("INSERT INTO programacionp (equipo1pro, equipo2pro, fechapro, estadiopro) VALUES (%s, %s, %s, %s, %s)", (equipo1pro, equipo2pro, fechapro, estadiopro))
+            cursor.execute("INSERT INTO programacionp (equipo1pro, equipo2pro, fechapro,horapro, estadiopro) VALUES (%s, %s, %s, %s,%s)", (equipo1pro, equipo2pro, fechapro,horapro, estadiopro))
         conn.commit()
     cursor.execute("SELECT * FROM programacionp")
     datos = cursor.fetchall()
@@ -232,9 +233,10 @@ def editarpar(idp):
         equipo1pro = request.form['equipo1pro']
         equipo2pro = request.form['equipo2pro']
         fechapro = request.form['fechapro']
+        horapro = request.form['horapro']
         estadiopro = request.form['estadiopro']
 
-        cursor.execute("UPDATE programacionp SET equipo1pro = %s, equipo2pro = %s, fechapro = %s, estadiopro = %s WHERE idp = %s", (equipo1pro, equipo2pro, fechapro, estadiopro, idp))
+        cursor.execute("UPDATE programacionp SET equipo1pro = %s, equipo2pro = %s, fechapro = %s, horapro = %s, estadiopro = %s WHERE idp = %s", (equipo1pro, equipo2pro, fechapro,horapro, estadiopro, idp))
         conn.commit()
 
         return redirect(url_for('partidospro'))
